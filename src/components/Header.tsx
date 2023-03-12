@@ -86,7 +86,7 @@ const Header = () => {
                         <Toolbar className={'header'}>
                             <HamburgerButton/>
                             <div className={'fff'}>
-                                <Logo src='public/bebra.png' />
+                                BEBRA MOVIES
                             </div>
                             <Search>
                                 <SearchIconWrapper>
