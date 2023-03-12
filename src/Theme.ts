@@ -11,4 +11,16 @@ const theme = createTheme({
     }
 });
 
-export default theme
+
+
+const styledTheme = {
+    colors: {
+        primary: "#294421",
+        secondary: "#edf2ff",
+    },
+    media: {
+        phone: "(max-width: 600px)",
+    }
+}
+
+export {theme, styledTheme}

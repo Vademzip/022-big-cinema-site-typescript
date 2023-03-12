@@ -1,0 +1,17 @@
+header{
+    box-shadow: none!important;
+}
+
+.navbar{
+    position:relative!important;
+    /*z-index: 300!important;*/
+}
+
+.wrapper{
+    flex: 1 0 auto;
+}
+
+.fff{
+    display: block;
+    flex-grow: 1;
+}
