@@ -67,6 +67,17 @@ const Logo = styled.img`
   }
 `
 
+
+const LogoTitle = styled.div`
+  display: block;
+  flex-grow: 1;
+  font-size: 24px;
+  @media ${props => props.theme.media.phone}{
+    display:none;
+  }
+`
+
+
 const Header = () => {
 
     const node = useRef<HTMLDivElement>(null);
@@ -85,9 +96,9 @@ const Header = () => {
                     <Container>
                         <Toolbar className={'header'}>
                             <HamburgerButton/>
-                            <div className={'fff'}>
+                            <LogoTitle>
                                 BEBRA MOVIES
-                            </div>
+                            </LogoTitle>
                             <Search>
                                 <SearchIconWrapper>
                                     <SearchIcon/>
