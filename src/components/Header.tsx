@@ -86,7 +86,7 @@ const Header = () => {
                         <Toolbar className={'header'}>
                             <HamburgerButton/>
                             <div className={'fff'}>
-                                <Logo src='../../bebra.png' />
+                                <Logo src='public/bebra.png' />
                             </div>
                             <Search>
                                 <SearchIconWrapper>

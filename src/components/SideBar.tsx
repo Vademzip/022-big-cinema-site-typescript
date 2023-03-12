@@ -1,7 +1,7 @@
 import React, {FC, PropsWithChildren, useContext} from 'react';
 import styled, {css, ThemedStyledProps} from 'styled-components';
 import { MenuContext } from '../context/navState';
-import arrow from '../arrow.svg';
+import arrow from '../../public/arrow.svg';
 
 interface IComponent{
     open : boolean;
