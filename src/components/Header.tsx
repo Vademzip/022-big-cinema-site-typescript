@@ -13,8 +13,8 @@ import {useContext, useEffect, useRef} from "react";
 import {MenuContext} from "../context/navState";
 import HamburgerButton from "./HamburgerButton";
 import {SideMenu} from "./SideBar";
-import useOnClickOutside from "../hooks/onClickOutside";
 import styled from "styled-components";
+import useOnClickOutside from "../hooks/onClickOutside";
 
 
 
@@ -69,7 +69,7 @@ const Logo = styled.img`
 
 const Header = () => {
 
-    const node = useRef(null);
+    const node = useRef<HTMLDivElement>(null);
     const {isMenuOpen, toggleMenuMode} = useContext(MenuContext);
     useOnClickOutside(node, () => {
         // Only if menu is open
@@ -101,7 +101,7 @@ const Header = () => {
                     </Container>
                 </AppBar>
             </Box>
-            <nav ref={node}>
+            <nav ref={node} className={'sideMenu'}>
                 <SideMenu/>
             </nav>
         </>

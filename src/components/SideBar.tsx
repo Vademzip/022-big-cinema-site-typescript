@@ -1,9 +1,13 @@
 import React, {FC, PropsWithChildren, useContext} from 'react';
-import styled, { css } from 'styled-components';
+import styled, {css, ThemedStyledProps} from 'styled-components';
 import { MenuContext } from '../context/navState';
 import arrow from '../arrow.svg';
 
-const Menu = styled.nav`
+interface IComponent{
+    open : boolean;
+}
+
+const Menu = styled.nav<IComponent>`
   position: absolute;
   top: 0;
   left: 0;
@@ -17,7 +21,7 @@ const Menu = styled.nav`
   padding-top: 100px;
   padding-right: 0;
   align-items: stretch;
-  background-color: ${props => props.theme.colors.primary});
+  background-color: ${props => props.color || props.theme.colors.primary};
   transform: translateX(-100%);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
@@ -26,6 +30,9 @@ const Menu = styled.nav`
           css`
       transform: translateX(0);
     `}
+  &>*s{
+    background-color: ${props => props.color || props.theme.colors.primary};
+  }
 `;
 
 export const MenuLink = styled.a`

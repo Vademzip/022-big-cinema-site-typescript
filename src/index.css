@@ -15,3 +15,9 @@ header{
     display: block;
     flex-grow: 1;
 }
+
+.sideMenu{
+    position:relative;
+    z-index: 500;
+    background-color: green;
+}
