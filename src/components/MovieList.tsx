@@ -6,7 +6,11 @@ const MovieListEl = styled.div`
   display:flex;
   flex-wrap : wrap;
   gap : 10px;
-  justify-content: center;
+  justify-content: space-between;
+  @media ${props => props.theme.media.phone}{
+    justify-content: center;
+  }
+  
 `
 
 const MovieList:FC = () => {

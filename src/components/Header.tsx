@@ -16,6 +16,7 @@ import {SideMenu} from "./SideBar";
 import styled from "styled-components";
 import useOnClickOutside from "../hooks/onClickOutside";
 import bebraLogo from "../bebra.png"
+import {NavLink} from "react-router-dom";
 
 
 const Search = muiStyled('div')(({theme}) => ({
@@ -100,9 +101,21 @@ const Header = () => {
                             <div ref={menuButtonRef}>
                                 <HamburgerButton/>
                             </div>
-                            <div className={'fff'}>
+                            <NavLink to={'/'}>
                                 <Logo src={bebraLogo}/>
+                            </NavLink>
+                            <div className={'fff'}>
+
+                                <NavLink to={'/'}
+                                         className={({isActive}) => (isActive ? 'active' : 'inactive')}>Главная</NavLink>
+                                <NavLink to={'/news'}
+                                         className={({isActive}) => (isActive ? 'active' : 'inactive')}>Новинки</NavLink>
+                                <NavLink to={'/movies'}
+                                         className={({isActive}) => (isActive ? 'active' : 'inactive')}>Фильмы</NavLink>
+                                <NavLink to={'/series'}
+                                         className={({isActive}) => (isActive ? 'active' : 'inactive')}>Сериалы</NavLink>
                             </div>
+
                             <Search>
                                 <SearchIconWrapper>
                                     <SearchIcon/>

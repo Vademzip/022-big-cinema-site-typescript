@@ -12,6 +12,7 @@ const FooterBlock = styled.footer`
   min-height:128px;
   flex: 0 0 auto;
   flex-wrap: wrap;
+  margin-top: 20px;
 `
 
 const DescBlock = styled.div`

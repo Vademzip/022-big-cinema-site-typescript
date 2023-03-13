@@ -2,27 +2,42 @@ import React, {FC} from 'react';
 import styled from "styled-components";
 
 const Movie = styled.div`
-  height: 300px;
+  width: 243px;
+  height: auto;
   background-color: black;
   display: flex;
   flex-direction: column;
   border-radius : 10px;
+  @media ${props => props.theme.media.phone}{
+    width : 75%;
+    height: auto;
+  }
+  &:hover{
+    & img{
+      transform: translateY(-5px);
+      transition: all 0.25s ease-in-out;
+    }
+  }
+  
 `
 
 const Poster = styled.img`
   max-height: 80%;
-  border-radius: 10px;
+  border-radius: 10px 10px 0 0;
 `
 
 const Title = styled.div`
-    align-self: center;
+  text-align: center;
+  align-self: center;
+  font-size: 18px;
 `
 const AdditionalInfo = styled.div`
   display: flex;
   justify-content: space-around;
   justify-self: end;
   flex-grow: 1;
-  align-items: flex-end;
+  align-items: center;
+  font-size: 18px;
 `
 
 const Date = styled.div`

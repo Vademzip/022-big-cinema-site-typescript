@@ -3,15 +3,19 @@ import styled from 'styled-components';
 import { MenuContext } from '../context/navState';
 
 const MenuButton = styled.button`
-  display: block;
+  display: none;
   transform-origin: 16px 11px;
   float: left;
   margin-right: 29px;
   outline: 0;
   border: 0;
-  padding: 12px;
   background: none;
+  padding-left: 3px;
 
+  @media ${props => props.theme.media.phone} {
+    display: block;
+  }
+  
   span {
     transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   }

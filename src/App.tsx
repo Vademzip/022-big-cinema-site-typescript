@@ -6,6 +6,7 @@ import {Container} from "@mui/material";
 import Home from "./pages/Home";
 import NavState from "./context/navState";
 import styled from "styled-components";
+import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -18,13 +19,17 @@ function App() {
 
     return (
         <NavState>
+            <Router>
                 <Header/>
-            <AppWrapper>
-                <Container className={'wrapper'}>
-                    <Home/>
-                </Container>
-                <Footer/>
-            </AppWrapper>
+                <AppWrapper>
+                        <Container className={'wrapper'}>
+                    <Routes>
+                            <Route path="/" element={<Home/>}/>
+                    </Routes>
+                        </Container>
+                    <Footer/>
+                </AppWrapper>
+            </Router>
         </NavState>
     )
 }

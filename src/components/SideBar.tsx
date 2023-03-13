@@ -2,6 +2,7 @@ import React, {FC, PropsWithChildren, useContext} from 'react';
 import styled, {css, ThemedStyledProps} from 'styled-components';
 import { MenuContext } from '../context/navState';
 import arrow from '../arrow.svg';
+import {NavLink} from "react-router-dom";
 
 interface IComponent{
     open : boolean;
@@ -12,8 +13,9 @@ const Menu = styled.nav<IComponent>`
   top: 0;
   left: 0;
   bottom: 0;
-  z-index: 3293;
+  z-index: 293;
   display: block;
+  height: 100%;
   width: 400px;
   max-height: 100vh;
   max-width: 100%;
@@ -24,6 +26,7 @@ const Menu = styled.nav<IComponent>`
   background-color: ${props => props.color || props.theme.colors.primary};
   transform: translateX(-100%);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  
 
   &{
     
@@ -72,9 +75,9 @@ SideMenu.defaultProps = {
     children: (
         <>
             <MenuLink href="/">Главная</MenuLink>
-            <MenuLink href="/articles">Статьи</MenuLink>
-            <MenuLink href="/about">О сайте</MenuLink>
-            <MenuLink href="/contact">Контакт</MenuLink>
+            <MenuLink href="/articles">Новинки</MenuLink>
+            <MenuLink href="/about">Фильмы</MenuLink>
+            <MenuLink href="/contact">Сериалы</MenuLink>
         </>
     ),
 };

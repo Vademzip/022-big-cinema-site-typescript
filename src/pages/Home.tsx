@@ -15,6 +15,11 @@ const MainPage = styled.main`
 `
 const TrendTitle = styled.div`
   font-size: 48px;
+
+  @media ${props => props.theme.media.phone} {
+    text-align: center;
+  }
+  
 `
 
 const Home: FC<PropsWithChildren<HomePageProps>> = (props, {children}) => {
