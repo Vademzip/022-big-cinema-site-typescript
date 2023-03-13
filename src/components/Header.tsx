@@ -15,8 +15,7 @@ import HamburgerButton from "./HamburgerButton";
 import {SideMenu} from "./SideBar";
 import styled from "styled-components";
 import useOnClickOutside from "../hooks/onClickOutside";
-
-
+import bebraLogo from "../bebra.png"
 
 
 const Search = muiStyled('div')(({theme}) => ({
@@ -61,9 +60,9 @@ const StyledInputBase = muiStyled(InputBase)(({theme}) => ({
 
 const Logo = styled.img`
   max-height: 45px;
-  max-width:64px;
-  @media ${props => props.theme.media.phone}{
-    display:none;
+  max-width: 64px;
+  @media ${props => props.theme.media.phone} {
+    display: none;
   }
 `
 
@@ -72,8 +71,8 @@ const LogoTitle = styled.div`
   display: block;
   flex-grow: 1;
   font-size: 24px;
-  @media ${props => props.theme.media.phone}{
-    display:none;
+  @media ${props => props.theme.media.phone} {
+    display: none;
   }
 `
 
@@ -81,10 +80,13 @@ const LogoTitle = styled.div`
 const Header = () => {
 
     const node = useRef<HTMLDivElement>(null);
+    const menuButtonRef = useRef<HTMLDivElement>(null);
     const {isMenuOpen, toggleMenuMode} = useContext(MenuContext);
-    useOnClickOutside(node, () => {
+    useOnClickOutside(node, menuButtonRef, () => {
+        console.log('я в функции открытия')
         // Only if menu is open
         if (isMenuOpen) {
+            console.log('Закрываю меню')
             toggleMenuMode();
         }
     });
@@ -95,16 +97,18 @@ const Header = () => {
                 <AppBar className={'navbar'}>
                     <Container>
                         <Toolbar className={'header'}>
-                            <HamburgerButton/>
-                            <LogoTitle>
-                                BEBRA MOVIES
-                            </LogoTitle>
+                            <div ref={menuButtonRef}>
+                                <HamburgerButton/>
+                            </div>
+                            <div className={'fff'}>
+                                <Logo src={bebraLogo}/>
+                            </div>
                             <Search>
                                 <SearchIconWrapper>
                                     <SearchIcon/>
                                 </SearchIconWrapper>
                                 <StyledInputBase
-                                    placeholder="Search…"
+                                    placeholder="Поиск…"
                                     inputProps={{'aria-label': 'search'}}
                                 />
                             </Search>

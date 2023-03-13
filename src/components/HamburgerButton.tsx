@@ -65,7 +65,8 @@ const HamburgerButton = () => {
     const { isMenuOpen, toggleMenuMode } = useContext(MenuContext);
 
     const clickHandler = () => {
-        if (!isMenuOpen) {toggleMenuMode()}
+        console.log('Щелчок по кнопке меню')
+            toggleMenuMode()
     };
 
     return (
