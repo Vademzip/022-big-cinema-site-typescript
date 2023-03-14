@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Movie = styled.div`
   width: 243px;
-  height: auto;
+  height: 426px;
   background-color: black;
   display: flex;
   flex-direction: column;
@@ -55,22 +55,21 @@ interface IMovieInfo {
     "posterUrl" : string,
     "creationYear" : Number | Date,
     "rating" : Number,
-    "cast" : String[]
+    "cast" : String[],
+    "id" : Number
 }
 
 
 const MovieListItem:FC<IMovieInfo> = (props) => {
     return (
-        <>
             <Movie>
                 <Poster src={props.posterUrl}/>
                 <Title>{props.name}</Title>
                 <AdditionalInfo>
-                    <div>2022</div>
-                    <div>7.9</div>
+                    <div>{props.creationYear.toString()}</div>
+                    <div>{props.rating.toString()}</div>
                 </AdditionalInfo>
             </Movie>
-        </>
     );
 };
 

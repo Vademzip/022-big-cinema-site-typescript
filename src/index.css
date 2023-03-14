@@ -50,3 +50,27 @@ header{
         display: none;
     }
 }
+
+.slick-track .slick-active > div{
+    display: flex!important;
+}
+
+/* CSS для первого и четвертого элемента класса stick-active */
+.stick-track .stick-active:nth-child(1) > div,
+.stick-track .stick-active:nth-child(4) > div {
+}
+
+/* CSS для второго и третьего элементов класса stick-active */
+.stick-track .stick-active:nth-child(2) > div,
+.stick-track .stick-active:nth-child(3) > div {
+    justify-content: center!important;
+}
+
+
+.slick-prev{
+
+}
+
+.slick-next{
+
+}

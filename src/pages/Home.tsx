@@ -3,6 +3,7 @@ import styled from "styled-components";
 import SliderValueLabel from "@mui/material/Slider/SliderValueLabel";
 import propTypes = SliderValueLabel.propTypes;
 import MovieList from "../components/MovieList";
+import ImageSlider from "../components/ImageSlider";
 
 interface HomePageProps {
     color?: string
@@ -29,7 +30,6 @@ const Home: FC<PropsWithChildren<HomePageProps>> = (props, {children}) => {
                 ПОПУЛЯРНО СЕЙЧАС
             </TrendTitle>
             <MovieList/>
-
         </MainPage>
     );
 };
