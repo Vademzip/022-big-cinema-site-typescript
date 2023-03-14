@@ -12,7 +12,6 @@ const MovieListEl = styled.div`
   @media ${props => props.theme.media.phone} {
     justify-content: center;
   }
-
 `
 
 const MovieList: FC = () => {

@@ -45,32 +45,85 @@ header{
     color:gray;
 }
 
-@media (max-width: 600px){
+@media (max-width: 900px){
     .fff a{
         display: none;
     }
 }
 
 .slick-track .slick-active > div{
-    display: flex!important;
-}
-
-/* CSS для первого и четвертого элемента класса stick-active */
-.stick-track .stick-active:nth-child(1) > div,
-.stick-track .stick-active:nth-child(4) > div {
-}
-
-/* CSS для второго и третьего элементов класса stick-active */
-.stick-track .stick-active:nth-child(2) > div,
-.stick-track .stick-active:nth-child(3) > div {
-    justify-content: center!important;
+    display: flex;
 }
 
 
-.slick-prev{
+@media (min-width: 1121px) {
+    /* CSS для первого и четвертого элемента класса stick-active */
+    .slick-track .slick-slide:nth-child(4n+1) > div{
+        justify-content: start;
+    }
+
+    .slick-track .slick-slide:nth-child(4n+4) > div{
+        justify-content: end;
+    }
+
+    /* CSS для второго и третьего элементов класса stick-active */
+    .slick-track .slick-slide:nth-child(4n+2) > div,
+    .slick-track .slick-slide:nth-child(4n+3) > div {
+        justify-content: center;
+    }
+}
+
+.slick-slider{
+    margin-bottom: 25px;
+}
+
+
+
+
+.slick-dots li.slick-active button:before{
+    color: white;
+}
+
+.slick-track .slick-slide > div{
+    transition: 0.5ms all ease-in-out;
+}
+
+@media (max-width: 1120px) and (min-width: 801px){
+    /* CSS для первого и четвертого элемента класса stick-active */
+    .slick-track .slick-slide:nth-child(3n+1) > div{
+        justify-content: start;
+    }
+
+    .slick-track .slick-slide:nth-child(3n+3) > div{
+        justify-content: end;
+    }
+
+    /* CSS для второго и третьего элементов класса stick-active */
+    .slick-track .slick-slide:nth-child(3n+2) > div {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 800px){
+    /* CSS для первого и четвертого элемента класса stick-active */
+    .slick-track .slick-slide > div{
+        justify-content: center;
+    }
 
 }
 
-.slick-next{
+@media (max-width: 425px){
+
+    .slick-track .slick-slide > div{
+        overflow: hidden;
+    }
+
+    .slick-prev{
+        left: 0;
+    }
+
+    .slick-next{
+        right: 0;
+    }
 
 }

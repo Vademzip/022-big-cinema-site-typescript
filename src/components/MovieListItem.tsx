@@ -10,7 +10,7 @@ const Movie = styled.div`
   border-radius : 10px;
   @media ${props => props.theme.media.phone}{
     width : 75%;
-    height: auto;
+    height: 500px;
   }
   &:hover{
     & img{

@@ -19,7 +19,8 @@ const styledTheme = {
         secondary: "#edf2ff",
     },
     media: {
-        phone: "(max-width: 600px)",
+        phone: "(max-width: 425px)",
+        tablet: "(max-width: 900px) and (min-width: 425px)"
     }
 }
 

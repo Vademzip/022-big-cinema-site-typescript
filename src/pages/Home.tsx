@@ -30,6 +30,10 @@ const Home: FC<PropsWithChildren<HomePageProps>> = (props, {children}) => {
                 ПОПУЛЯРНО СЕЙЧАС
             </TrendTitle>
             <MovieList/>
+            <TrendTitle>
+                ПЛОТНЫЕ БОЕВИКИ
+            </TrendTitle>
+            <MovieList/>
         </MainPage>
     );
 };

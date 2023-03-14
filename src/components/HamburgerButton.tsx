@@ -12,6 +12,10 @@ const MenuButton = styled.button`
   background: none;
   padding-left: 3px;
 
+  @media ${props => props.theme.media.tablet} {
+    display: block;
+  }
+
   @media ${props => props.theme.media.phone} {
     display: block;
   }
