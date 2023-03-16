@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useContext, useRef} from 'react';
+import {RefObject, useContext, useRef} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,7 +7,7 @@ import {Container} from "@mui/material";
 import {MenuContext} from "../context/navState";
 import HamburgerButton from "./HamburgerButton";
 import {SideMenu} from "./SideBar";
-import useOnClickOutside from "../hooks/onClickOutside";
+import {useOnClickOutside, useOnClickOutsideForMenu} from "../hooks/onClickOutside";
 import bebraLogo from "../bebra.png"
 import {NavLink} from "react-router-dom";
 import SearchBar from "./SearchBar";
@@ -16,16 +16,26 @@ import UserIcon from "./UserIcon";
 
 
 const Header = () => {
-
+    const userMenuRef = useRef<HTMLInputElement>(null);
     const node = useRef<HTMLDivElement>(null);
     const menuButtonRef = useRef<HTMLDivElement>(null);
     const userMenuButtonRef = useRef<HTMLDivElement>(null);
     const {isMenuOpen, toggleMenuMode} = useContext(MenuContext);
+    const {isUserMenuOpen, toggleUserMenuMode} = useContext(MenuContext)
+
     useOnClickOutside(node, menuButtonRef, () => {
         if (isMenuOpen) {
             toggleMenuMode();
         }
     });
+    useOnClickOutsideForMenu(userMenuRef, userMenuButtonRef, () => {
+        console.log('Проверяю открыто ли меню')
+        if (isUserMenuOpen) {
+            console.log('Оно открыто, закрываю!')
+            toggleUserMenuMode();
+        }
+    })
+
 
     return (
         <>
@@ -49,7 +59,7 @@ const Header = () => {
                                 <NavLink to={'/series'}
                                          className={({isActive}) => (isActive ? 'active' : 'inactive')}>Сериалы</NavLink>
                             </div>
-                            <SearchBar/>
+                            <SearchBar inputRef={userMenuRef}/>
                             <div ref={userMenuButtonRef}>
                                 <UserIcon/>
                             </div>

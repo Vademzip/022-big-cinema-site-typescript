@@ -10,6 +10,7 @@ import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
 import ImageSlider from "./components/ImageSlider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import OneMoviePage from "./pages/OneMoviePage";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -28,6 +29,7 @@ function App() {
                         <Container className={'wrapper'}>
                     <Routes>
                             <Route path="/" element={<Home/>}/>
+                            <Route path="/:id" element={<OneMoviePage/>}/>
                     </Routes>
                         </Container>
                     <Footer/>

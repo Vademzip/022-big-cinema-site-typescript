@@ -1,4 +1,5 @@
 import React, {createContext, FC, PropsWithChildren, useState} from 'react';
+import {createLogger} from "vite";
 
 interface IValue{
     isMenuOpen : boolean;
@@ -22,6 +23,7 @@ const NavState:FC<PropsWithChildren> = ({ children }) => {
     }
 
     function toggleUserMenuMode() {
+        console.log('Меняю положение меню')
         setUserMenu(!isUserMenuOpen);
     }
 
