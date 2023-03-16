@@ -1,93 +1,28 @@
 import * as React from 'react';
-import {styled as muiStyled, alpha} from '@mui/material/styles';
+import {useContext, useRef} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import {Container} from "@mui/material";
-import {useContext, useEffect, useRef} from "react";
 import {MenuContext} from "../context/navState";
 import HamburgerButton from "./HamburgerButton";
 import {SideMenu} from "./SideBar";
-import styled from "styled-components";
 import useOnClickOutside from "../hooks/onClickOutside";
 import bebraLogo from "../bebra.png"
 import {NavLink} from "react-router-dom";
-
-
-const Search = muiStyled('div')(({theme}) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-        width: 'auto',
-    },
-}));
-const SearchIconWrapper = muiStyled('div')(({theme}) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-const StyledInputBase = muiStyled(InputBase)(({theme}) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-                width: '20ch',
-            },
-        },
-    },
-}));
-
-const Logo = styled.img`
-  max-height: 45px;
-  max-width: 64px;
-  @media ${props => props.theme.media.phone} {
-    display: none;
-  }
-`
-
-
-const LogoTitle = styled.div`
-  display: block;
-  flex-grow: 1;
-  font-size: 24px;
-  @media ${props => props.theme.media.phone} {
-    display: none;
-  }
-`
+import SearchBar from "./SearchBar";
+import {Logo} from "./Logo";
+import UserIcon from "./UserIcon";
 
 
 const Header = () => {
 
     const node = useRef<HTMLDivElement>(null);
     const menuButtonRef = useRef<HTMLDivElement>(null);
+    const userMenuButtonRef = useRef<HTMLDivElement>(null);
     const {isMenuOpen, toggleMenuMode} = useContext(MenuContext);
     useOnClickOutside(node, menuButtonRef, () => {
-        console.log('я в функции открытия')
-        // Only if menu is open
         if (isMenuOpen) {
-            console.log('Закрываю меню')
             toggleMenuMode();
         }
     });
@@ -104,8 +39,7 @@ const Header = () => {
                             <NavLink to={'/'}>
                                 <Logo src={bebraLogo}/>
                             </NavLink>
-                            <div className={'fff'}>
-
+                            <div className={'navMenu'}>
                                 <NavLink to={'/'}
                                          className={({isActive}) => (isActive ? 'active' : 'inactive')}>Главная</NavLink>
                                 <NavLink to={'/news'}
@@ -115,16 +49,10 @@ const Header = () => {
                                 <NavLink to={'/series'}
                                          className={({isActive}) => (isActive ? 'active' : 'inactive')}>Сериалы</NavLink>
                             </div>
-
-                            <Search>
-                                <SearchIconWrapper>
-                                    <SearchIcon/>
-                                </SearchIconWrapper>
-                                <StyledInputBase
-                                    placeholder="Поиск…"
-                                    inputProps={{'aria-label': 'search'}}
-                                />
-                            </Search>
+                            <SearchBar/>
+                            <div ref={userMenuButtonRef}>
+                                <UserIcon/>
+                            </div>
                         </Toolbar>
                     </Container>
                 </AppBar>
