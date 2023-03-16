@@ -15,7 +15,7 @@ export const MenuContext = createContext({
 
 const NavState:FC<PropsWithChildren> = ({ children }) => {
     const [isMenuOpen, toggleMenu] = useState(false);
-    const [isUserMenuOpen, setUserMenu]=useState<boolean>(true)
+    const [isUserMenuOpen, setUserMenu]=useState<boolean>(false)
 
     function toggleMenuMode() {
         toggleMenu(!isMenuOpen);
