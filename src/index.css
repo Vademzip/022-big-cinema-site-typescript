@@ -117,6 +117,13 @@ header {
     .slick-track .slick-slide > div {
         justify-content: center;
     }
+    .movieLink {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
+        flex-basis: 100%;
+    }
 
 }
 
