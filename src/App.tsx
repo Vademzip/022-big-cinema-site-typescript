@@ -7,7 +7,6 @@ import Home from "./pages/Home";
 import NavState from "./context/navState";
 import styled from "styled-components";
 import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
-import ImageSlider from "./components/ImageSlider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import OneMoviePage from "./pages/OneMoviePage";

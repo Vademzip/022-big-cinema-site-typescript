@@ -55,7 +55,7 @@ const Rating = styled.div`
 export interface IMovieInfo {
     "name": String,
     "genre": String[],
-    "producer": String,
+    "producersId": Number[],
     "posterUrl": string,
     "creationYear": Number | Date,
     "rating": Number,

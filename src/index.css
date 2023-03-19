@@ -134,12 +134,12 @@ header {
     }
 
     .slick-prev {
-        left: 0;
+        left: 0!important;
         z-index: 100;
     }
 
     .slick-next {
-        right: 0;
+        right: 0!important;
         z-index: 100;
     }
 
@@ -164,7 +164,7 @@ header {
 }
 
 
-.userMenu a:hover {
+.userMenu >*:hover  {
     cursor: pointer;
     text-shadow: 0 0 4px #fff;
 }
@@ -178,4 +178,50 @@ header {
     .mainGrid {
         justify-content: center;
     }
+}
+
+.posterGrid{
+    display: flex;
+    justify-content: center;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-wrapper:not(:last-of-type){
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 70%;
+    border: 3px solid #294421;
+    border-radius: 5px;
+    padding: 10px;
+    outline: none;
+    transition: 0.3s all ease-in-out;
+}
+
+.input-focused input {
+    border-color: #ff8100;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.3);
+}
+
+.closeModalIcon{
+    position:absolute;
+    right: 5px;
+    top: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+.closeModalIcon:hover{
+    cursor: pointer;
 }

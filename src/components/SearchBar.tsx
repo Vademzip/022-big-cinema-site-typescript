@@ -4,6 +4,10 @@ import InputBase from "@mui/material/InputBase";
 
 interface ISearchBarProps {
     inputRef: React.RefObject<HTMLInputElement>;
+    loginButtonRef: React.RefObject<HTMLDivElement>
+
+    // modalContentRef: React.RefObject<HTMLDivElement>
+    handleLoginClick: () => void;
 }
 
 const UserButtonMenu = styled.div<IComponent>`
@@ -13,14 +17,15 @@ const UserButtonMenu = styled.div<IComponent>`
   position: absolute;
   box-sizing: border-box;
   border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.15); /* значение для прозрачности фона */
+  background-color: #294421;
+  //background-color: rgba(255, 255, 255, 0.15); /* значение для прозрачности фона */
   display: flex;
   flex-direction: column;
   justify-content: center; /* выравнивание по горизонтали */
   align-items: center; /* выравнивание по вертикали */
   transform: translateY(-150px);
   opacity: 0;
-  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 
   ${props =>
           props.open &&
@@ -30,7 +35,8 @@ const UserButtonMenu = styled.div<IComponent>`
             z-index: 1;
           `}
   &:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* значение для прозрачности фона */
+    border: 1px solid;
+    //background-color: rgba(255, 255, 255, 0.2); /* значение для прозрачности фона */
     cursor: pointer;
   }
 
@@ -83,8 +89,8 @@ import {Link} from "react-router-dom";
 import {MenuContext} from "../context/navState";
 import {IComponent} from "./SideBar";
 
-const SearchBar = ({inputRef}: ISearchBarProps) => {
-    const {isUserMenuOpen} = useContext(MenuContext)
+const SearchBar = ({inputRef, loginButtonRef, handleLoginClick}: ISearchBarProps) => {
+    const {isUserMenuOpen, toggleUserMenuMode} = useContext(MenuContext)
 
     return (
         <Search className={'search'}>
@@ -97,7 +103,13 @@ const SearchBar = ({inputRef}: ISearchBarProps) => {
             />
             <div ref={inputRef}>
                 <UserButtonMenu open={isUserMenuOpen} className={'userMenu'}>
-                    <Link to={'/login'}>Авторизация</Link>
+
+                    <div onClick={() => {
+                        handleLoginClick()
+                        toggleUserMenuMode()
+                    }
+                    } ref={loginButtonRef}>Авторизация
+                    </div>
                     <Link to={'/register'}>Зарегистрироваться</Link>
                 </UserButtonMenu>
             </div>

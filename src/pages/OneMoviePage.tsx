@@ -7,7 +7,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import styled from "styled-components";
 import data from "../mock/movies.json"
 import {IMovieInfo} from "../components/MovieListItem";
-
+import producers from "../mock/producers.json";
 
 const MovieInfo = styled.div`
   display: flex;
@@ -25,7 +25,8 @@ const MovieTitle = styled.div`
 `
 const MovieCreationYear = styled.div`
   color: #cbcbcb;
-  &:hover{
+
+  &:hover {
     color: white;
     cursor: pointer;
   }
@@ -36,14 +37,55 @@ const MovieTags = styled.div`
   display: flex;
   column-gap: 5px;
   color: #cbcbcb;
-  &> div:hover{
+
+  & > div:hover {
     color: white;
     cursor: pointer;
   }
 `
 
 const MovieProducer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 18px;
+`
 
+const MovieProducerList = styled.div`
+  display: flex;
+  column-gap: 1rem;
+
+  
+`
+
+const MovieProducerInfo = styled.div`
+  width: 64px;
+  height: 64px;
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+`
+
+const MovieProducerInfoContainer = styled.div`
+  display: flex;
+  text-align: center;
+  width: 100px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(254, 255, 253, 0.6);
+  }
+`
+
+const MovieProducerImg = styled.img`
+  border-radius: 10px;
+  width: 56px;
+  height: 56px;
 `
 
 const MovieActors = styled.div`
@@ -56,14 +98,23 @@ const Poster = styled.img`
   border-radius: 10px;
 `
 
+interface IProducer {
+    id: number;
+    name: string;
+    imageUrl: string;
+}
 
 const OneMoviePage: FC = () => {
+    function findProducersByIds(producersIds: number[]) {
+        return producers.filter(producer => producersIds.includes(producer.id));
+    }
+
     const {id} = useParams();
-    const [movie, setMovie] = useState<IMovieInfo| undefined>({
+    const [movie, setMovie] = useState<IMovieInfo | undefined>({
         "name": "Аватар: Путь воды",
         "genre": ["фантастика", "фэнтези", "боевик", "приключения"],
-        "producer": "Джеймс Кэмерон",
-        "posterUrl": "https://avatars.mds.yandex.net/get-kinopoisk-image/6201401/2e51cb8b-fd51-4166-84a2-63559733baac/1920x",
+        "producersId": [1],
+        "posterUrl": "",
         "creationYear": 2022,
         "rating": 7.8,
         "cast": [
@@ -75,16 +126,23 @@ const OneMoviePage: FC = () => {
         ],
         "id": 6464616946156464
     })
+    const [movieProducers, setMovieProducers] = useState<IProducer[]>([]);
     useEffect(() => {
         if (id) {
-            setMovie(data.find((movie) => movie.id === +id));
+            const foundMovie = data.find(movie => movie.id === +id);
+            if (foundMovie) {
+                setMovie(foundMovie);
+                const foundProducers = findProducersByIds(foundMovie.producersId);
+                // @ts-ignore
+                setMovieProducers(foundProducers);
+            }
         }
     }, [id]);
     return (
         <Box sx={{flexGrow: 1}}>
             {movie && (
                 <Grid className={'mainGrid'} container spacing={2}>
-                    <Grid xs={12} md={6}>
+                    <Grid className={'posterGrid'} xs={12} md={6}>
                         <Poster src={movie.posterUrl}/>
                     </Grid>
                     <Grid md={6}>
@@ -100,6 +158,19 @@ const OneMoviePage: FC = () => {
                                     <div>{tag}</div>
                                 ))}
                             </MovieTags>
+                            <MovieProducer>
+                                {movie.producersId.length < 2 ? 'Продюсер' : 'Продюсеры'}
+                                <MovieProducerList>
+                                    {movieProducers.map(producer => (
+                                        <MovieProducerInfoContainer>
+                                            <MovieProducerInfo>
+                                                <MovieProducerImg src={producer.imageUrl}/>
+                                            </MovieProducerInfo>
+                                            {producer.name}
+                                        </MovieProducerInfoContainer>
+                                    ))}
+                                </MovieProducerList>
+                            </MovieProducer>
                         </MovieInfo>
                     </Grid>
                 </Grid>

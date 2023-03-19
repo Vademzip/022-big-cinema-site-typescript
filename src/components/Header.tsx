@@ -13,6 +13,7 @@ import {NavLink} from "react-router-dom";
 import SearchBar from "./SearchBar";
 import {Logo} from "./Logo";
 import UserIcon from "./UserIcon";
+import LoginPage from "../pages/LoginPage";
 
 
 const Header = () => {
@@ -20,8 +21,19 @@ const Header = () => {
     const node = useRef<HTMLDivElement>(null);
     const menuButtonRef = useRef<HTMLDivElement>(null);
     const userMenuButtonRef = useRef<HTMLDivElement>(null);
-    const {isMenuOpen, toggleMenuMode} = useContext(MenuContext);
-    const {isUserMenuOpen, toggleUserMenuMode} = useContext(MenuContext)
+    const modalContentRef = useRef<HTMLDivElement>(null);
+    const loginButtonRef = useRef<HTMLDivElement>(null);
+
+    const {
+        isMenuOpen,
+        toggleMenuMode,
+        isUserMenuOpen,
+        toggleUserMenuMode,
+        showModal,
+        handleLoginClick,
+        setShowModal,
+        handleLoginClose
+    } = useContext(MenuContext);
 
     useOnClickOutside(node, menuButtonRef, () => {
         if (isMenuOpen) {
@@ -59,11 +71,22 @@ const Header = () => {
                                 <NavLink to={'/series'}
                                          className={({isActive}) => (isActive ? 'active' : 'inactive')}>Сериалы</NavLink>
                             </div>
-                            <SearchBar inputRef={userMenuRef}/>
+                            <SearchBar
+                                inputRef={userMenuRef}
+                                loginButtonRef={loginButtonRef}
+                                handleLoginClick={handleLoginClick}
+                            />
                             <div ref={userMenuButtonRef}>
                                 <UserIcon/>
                             </div>
                         </Toolbar>
+                        <LoginPage
+                            handleLoginClose={handleLoginClose}
+                            modalContentRef={modalContentRef}
+                            showModal = {showModal}
+                            setShowModal = {setShowModal}
+                            loginButtonRef={loginButtonRef}
+                        />
                     </Container>
                 </AppBar>
             </Box>
