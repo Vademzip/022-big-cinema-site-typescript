@@ -10,6 +10,7 @@ header {
 
 .header {
     padding: 0 !important;
+    position: relative;
 }
 
 .navbar {
@@ -233,4 +234,13 @@ input {
 
 .closeModalIcon:hover{
     cursor: pointer;
+}
+
+
+.userWelcome{
+    display: flex;
+    flex-direction: column;
+    flex-grow:1;
+    align-items: center;
+    justify-content: center;
 }

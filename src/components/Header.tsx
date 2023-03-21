@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,12 +8,16 @@ import HamburgerButton from "./HamburgerButton";
 import {SideMenu} from "./SideBar";
 import {useOnClickOutside, useOnClickOutsideForMenu} from "../hooks/onClickOutside";
 import bebraLogo from "../bebra.png"
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import SearchBar from "./SearchBar";
 import {Logo} from "./Logo";
 import UserIcon from "./UserIcon";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
+import FavoriteListButton from "./FavoriteListIcon";
+import FavoriteListIcon from "./FavoriteListIcon";
+import AuthorizedUserMenu from "./AuthorizedUserMenu";
+import {UserAvatar, UserMainInfo} from "./AuthorizedUserMenu";
 
 
 const Header = () => {
@@ -25,7 +29,7 @@ const Header = () => {
     const loginButtonRef = useRef<HTMLDivElement>(null);
     const registerModalContentRef = useRef<HTMLDivElement>(null);
     const registerButtonRef = useRef<HTMLDivElement>(null);
-
+    const [isUserAuth, setUserAuth] = useState<boolean>(true)
 
     const {
         isMenuOpen,
@@ -59,7 +63,7 @@ const Header = () => {
         <>
             <Box sx={{flexGrow: 0}}>
                 <AppBar className={'navbar'}>
-                    <Container>
+                    <Container style={{position: "relative"}}>
                         <Toolbar className={'header'}>
                             <div ref={menuButtonRef}>
                                 <HamburgerButton/>
@@ -77,12 +81,14 @@ const Header = () => {
                                 <NavLink to={'/series'}
                                          className={({isActive}) => (isActive ? 'active' : 'inactive')}>Сериалы</NavLink>
                             </div>
+                            {isUserAuth && <FavoriteListIcon/>}
                             <SearchBar
                                 inputRef={userMenuRef}
                                 loginButtonRef={loginButtonRef}
-                                registerButtonRef = {registerButtonRef}
-                                handleRegisterClick = {handleRegisterClick}
+                                registerButtonRef={registerButtonRef}
+                                handleRegisterClick={handleRegisterClick}
                                 handleLoginClick={handleLoginClick}
+                                isUserAuth={isUserAuth}
                             />
                             <div ref={userMenuButtonRef}>
                                 <UserIcon/>
@@ -101,6 +107,7 @@ const Header = () => {
                                       setShowModal={setShowRegisterModal}
                                       showModal={showRegisterModal}
                         />
+                       <AuthorizedUserMenu isUserAuth={isUserAuth}/>
                     </Container>
                 </AppBar>
             </Box>

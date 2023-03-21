@@ -1,14 +1,14 @@
 import styled, {css} from "styled-components";
 import {INavBarProps} from "./SideBar";
 
-export const UserMenu = styled.div<INavBarProps>`
+export const UnauthorizedUserMenu = styled.div<INavBarProps>`
   width: calc(100% + 49px);
   height: 65px;
   margin-top: 10px;
   position: absolute;
   box-sizing: border-box;
   border-radius: 5px;
-  background-color: #294421;
+  background-color: ${props => props.color || props.theme.colors.primary};
   //background-color: rgba(255, 255, 255, 0.15); /* значение для прозрачности фона */
   display: flex;
   flex-direction: column;
@@ -19,8 +19,8 @@ export const UserMenu = styled.div<INavBarProps>`
   transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 
   ${props =>
-    props.open &&
-    css`
+          props.open &&
+          css`
             transform: translateY(0);
             opacity: 1;
             z-index: 1;
@@ -33,3 +33,4 @@ export const UserMenu = styled.div<INavBarProps>`
 
 }
 `
+
