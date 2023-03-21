@@ -10,8 +10,9 @@ export enum InputType {
 interface IInputProps{
     type : InputType;
     label?: string;
+    id: string
 }
-const ColorInput = ({type, label} : IInputProps) => {
+const ColorInput = ({type, label, id} : IInputProps) => {
     const [isFocused, setIsFocused] = useState(false);
     const handleFocus = () => {
         setIsFocused(true);
@@ -23,9 +24,9 @@ const ColorInput = ({type, label} : IInputProps) => {
     return (
         <div className={`input-wrapper ${isFocused ? 'input-focused' : ''} ${type === 'checkbox' ? 'flex-wrapper' : ''}`
         }>
-            <label htmlFor="color-input">{label}</label>
+            <label htmlFor={id}>{label}</label>
             <input
-                id="color-input"
+                id={id}
                 type={type}
                 onFocus={handleFocus}
                 onBlur={handleBlur}

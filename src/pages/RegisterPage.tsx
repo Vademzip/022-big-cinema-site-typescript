@@ -70,7 +70,7 @@ const Modal = styled.div<ModalProps>`
     left: 0;
     width: 100%;
     height: 100%;
-    transform: translateY(100%);
+    transform: translateY(150%);
   }
 
   ${props =>
@@ -161,11 +161,11 @@ const LoginPage: FC<IRegisterPageProps> = ({
                     <LoginWrapper>
                         <CloseIcon className={'closeModalIcon'} onClick={handleRegisterClose}/>
                         <PageTitle>Регистрация</PageTitle>
-                        <ColorInput type={InputType.Text} label={'Ваше имя'}/>
-                        <ColorInput type={InputType.Text} label={'Логин'}/>
-                        <ColorInput type={InputType.Email} label={'Почта'}/>
-                        <ColorInput type={InputType.Password} label={'Пароль'}/>
-                        <ColorInput type={InputType.Checkbox} label={'Согласие на обработку данных'}/>
+                        <ColorInput type={InputType.Text} label={'Ваше имя'} id={'name'}/>
+                        <ColorInput type={InputType.Text} label={'Логин'} id={'login'}/>
+                        <ColorInput type={InputType.Email} label={'Почта'} id={'emailReg'}/>
+                        <ColorInput type={InputType.Password} label={'Пароль'} id={'passwordReg'}/>
+                        <ColorInput type={InputType.Checkbox} label={'Согласие на обработку данных'} id={'agree'}/>
 
                         <Button>
                             Регистрация

@@ -70,7 +70,7 @@ const Modal = styled.div<ModalProps>`
     left: 0;
     width: 100%;
     height: 100%;
-    transform: translateY(100%);
+    transform: translateY(150%);
   }
 
   ${props =>
@@ -162,8 +162,8 @@ const LoginPage: FC<ILoginPageProps> = ({
                     <LoginWrapper>
                         <CloseIcon className={'closeModalIcon'} onClick={handleLoginClose}/>
                         <PageTitle>Авторизация</PageTitle>
-                        <ColorInput type={InputType.Email} label={'Почта'}/>
-                        <ColorInput type={InputType.Password} label={'Пароль'}/>
+                        <ColorInput type={InputType.Email} label={'Почта'} id={'emailLog'}/>
+                        <ColorInput type={InputType.Password} label={'Пароль'} id={'passwordLog'}/>
                         <div>
                             <a>Забыли пароль</a>
                         </div>
