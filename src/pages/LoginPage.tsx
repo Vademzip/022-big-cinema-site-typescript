@@ -150,13 +150,23 @@ const LoginPage: FC<ILoginPageProps> = ({
 
     useEffect(() => {
         if (showModal){
+            let modal = document.querySelector('.modal')
+            if (modal)
+                (modal as HTMLElement).style.height = `${window.innerHeight}px`;
             document.body.style.overflow = "hidden";
             if (window.innerWidth > 800) {
                 document.body.style.paddingRight = `16px`;
             }
+            window.addEventListener('resize', () => {
+                if (modal) {
+                    (modal as HTMLElement).style.height = `${window.innerHeight}px`;
+                }
+            });
+
         }
         document.addEventListener('click', handleCloseModal);
         return () => {
+            // document.removeEventListener('resize')
             document.removeEventListener('click', handleCloseModal);
             document.body.style.overflow = "";
             document.body.style.paddingRight = "";
@@ -178,7 +188,7 @@ const LoginPage: FC<ILoginPageProps> = ({
 
     return (
         <>
-            <Modal show={showModal}>
+            <Modal className={'modal'} show={showModal}>
                 <ModalContent ref={modalContentRef}>
                     <LoginWrapper>
                         <CloseIcon className={'closeModalIcon'} onClick={handleLoginClose}/>
