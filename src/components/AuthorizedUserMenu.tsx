@@ -2,7 +2,9 @@ import styled, {css} from "styled-components";
 import {INavBarProps} from "./SideBar";
 
 interface IAuthorizedUserMenuProps {
-    isUserAuth : boolean;
+    open : boolean;
+    setUserAuth: React.Dispatch<React.SetStateAction<boolean>>;
+    setAuthorizedUserMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const AuthorizedUserMenuStyle = styled.div<INavBarProps>`   
@@ -21,8 +23,8 @@ export const AuthorizedUserMenuStyle = styled.div<INavBarProps>`
   -webkit-box-align: center;
   align-items: center;
   transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
-  transform: translateY(0px);
-  opacity: 1;
+  transform: translateY(-350px);
+  opacity: 0;
   z-index: 1;
   padding: 10px 0;
 
@@ -56,9 +58,17 @@ export const UserAvatar = styled.img`
 import React, {FC} from 'react';
 import {Link} from "react-router-dom";
 
-const AuthorizedUserMenu:FC<IAuthorizedUserMenuProps> = ({isUserAuth}) => {
+
+
+const AuthorizedUserMenu:FC<IAuthorizedUserMenuProps> = ({open,setUserAuth, setAuthorizedUserMenuOpen}) => {
+
+    const handleLogout = () => {
+        setUserAuth(false)
+        setAuthorizedUserMenuOpen(false)
+    }
+
     return (
-        <AuthorizedUserMenuStyle open={isUserAuth} className={'userMenu'}>
+        <AuthorizedUserMenuStyle open={open} className={'userMenu'}>
             <UserMainInfo>
                 <div className={'userWelcome'}>
                     <div>Здравстуйте,</div>
@@ -70,7 +80,7 @@ const AuthorizedUserMenu:FC<IAuthorizedUserMenuProps> = ({isUserAuth}) => {
             </UserMainInfo>
             <Link to={'/me'}>Личный кабинет</Link>
             <Link to={'/favorites'}>Избранное</Link>
-            <Link to={'/'}>Выйти</Link>
+            <Link to={'/'} onClick={handleLogout}>Выйти</Link>
         </AuthorizedUserMenuStyle>
     );
 };

@@ -18,6 +18,11 @@ const FavoriteListButton = styled.div`
     background-color: rgba(255, 255, 255, 0.2); /* значение для прозрачности фона */
     cursor: pointer;
   }
+
+  @media ${props => props.theme.media.phoneAndTablet} {
+    display: none;
+  }
+  
 `
 
 const FavoriteListIcon = () => {

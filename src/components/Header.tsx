@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useRef} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,16 +8,14 @@ import HamburgerButton from "./HamburgerButton";
 import {SideMenu} from "./SideBar";
 import {useOnClickOutside, useOnClickOutsideForMenu} from "../hooks/onClickOutside";
 import bebraLogo from "../bebra.png"
-import {Link, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import SearchBar from "./SearchBar";
 import {Logo} from "./Logo";
 import UserIcon from "./UserIcon";
 import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-import FavoriteListButton from "./FavoriteListIcon";
 import FavoriteListIcon from "./FavoriteListIcon";
 import AuthorizedUserMenu from "./AuthorizedUserMenu";
-import {UserAvatar, UserMainInfo} from "./AuthorizedUserMenu";
+import RegisterPage from "../pages/RegisterPage";
 
 
 const Header = () => {
@@ -29,7 +27,6 @@ const Header = () => {
     const loginButtonRef = useRef<HTMLDivElement>(null);
     const registerModalContentRef = useRef<HTMLDivElement>(null);
     const registerButtonRef = useRef<HTMLDivElement>(null);
-    const [isUserAuth, setUserAuth] = useState<boolean>(true)
 
     const {
         isMenuOpen,
@@ -43,7 +40,11 @@ const Header = () => {
         handleRegisterClose,
         handleRegisterClick,
         showRegisterModal,
-        setShowRegisterModal
+        setShowRegisterModal,
+        isUserAuth,
+        isAuthorizedUserMenuOpen,
+        setAuthorizedUserMenuOpen,
+        setUserAuth
     } = useContext(MenuContext);
 
     useOnClickOutside(node, menuButtonRef, () => {
@@ -94,20 +95,27 @@ const Header = () => {
                                 <UserIcon/>
                             </div>
                         </Toolbar>
-                        <LoginPage
-                            handleLoginClose={handleLoginClose}
-                            modalContentRef={modalContentRef}
-                            showModal={showModal}
-                            setShowModal={setShowModal}
-                            loginButtonRef={loginButtonRef}
-                        />
-                        <RegisterPage handleRegisterClose={handleRegisterClose}
-                                      registerButtonRef={registerButtonRef}
-                                      registerModalContentRef={registerModalContentRef}
-                                      setShowModal={setShowRegisterModal}
-                                      showModal={showRegisterModal}
-                        />
-                       <AuthorizedUserMenu isUserAuth={isUserAuth}/>
+                        {isUserAuth ?
+                            <AuthorizedUserMenu open={isAuthorizedUserMenuOpen}
+                                                setUserAuth = {setUserAuth}
+                                                setAuthorizedUserMenuOpen={setAuthorizedUserMenuOpen}/>
+                            : <>
+                                <LoginPage
+                                    handleLoginClose={handleLoginClose}
+                                    modalContentRef={modalContentRef}
+                                    showModal={showModal}
+                                    setShowModal={setShowModal}
+                                    loginButtonRef={loginButtonRef}
+                                    setUserAuth={setUserAuth}
+                                />
+                                <RegisterPage handleRegisterClose={handleRegisterClose}
+                                              registerButtonRef={registerButtonRef}
+                                              registerModalContentRef={registerModalContentRef}
+                                              setShowModal={setShowRegisterModal}
+                                              showModal={showRegisterModal}
+                                />
+                            </>
+                        }
                     </Container>
                 </AppBar>
             </Box>
