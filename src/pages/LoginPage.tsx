@@ -46,7 +46,6 @@ const LoginWrapper = styled.div`
 `
 
 const Modal = styled.div<ModalProps>`
-  overflow: hidden;
   position: fixed;
   top: 0;
   left: 0;
@@ -63,6 +62,7 @@ const Modal = styled.div<ModalProps>`
             transform: translateY(0);
             opacity: 1;
             z-index: 1;
+
           `
   };
 
@@ -79,9 +79,10 @@ const Modal = styled.div<ModalProps>`
           props.show && 
           css`
             @media only screen and (max-width: 600px) {
-            transform: translateY(0);
-            opacity: 1;
-            z-index: 1;
+              transform: translateY(0);
+              opacity: 1;
+              z-index: 1;
+
             }
           `
 };
@@ -97,7 +98,6 @@ const ModalContent = styled.div`
   @media only screen and (max-width: 600px) {
     width: 100%;
     height: 100%;
-    overflow-y: auto;
   }
 `;
 
@@ -146,12 +146,22 @@ const LoginPage: FC<ILoginPageProps> = ({
             setShowModal(false);
         }
     };
+
+
     useEffect(() => {
+        if (showModal){
+            document.body.style.overflow = "hidden";
+            if (window.innerWidth > 800) {
+                document.body.style.paddingRight = `16px`;
+            }
+        }
         document.addEventListener('click', handleCloseModal);
         return () => {
             document.removeEventListener('click', handleCloseModal);
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
         };
-    }, []);
+    }, [showModal]);
 
     const {
         register,
