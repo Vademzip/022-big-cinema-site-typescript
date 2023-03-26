@@ -19,7 +19,7 @@ const LoginWrapper = styled.div`
   border-radius: 25px;
   border: 1px solid white;
   text-align: center;
-  background-color: #294421;
+  background-color: ${props => props.color || props.theme.colors.primary};
   position: relative;
 
   @media only screen and (max-width: 600px) {

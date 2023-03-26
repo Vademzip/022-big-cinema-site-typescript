@@ -1,13 +1,15 @@
 import styled, {css} from "styled-components";
 import {INavBarProps} from "./SideBar";
+import React, {FC} from 'react';
+import {Link} from "react-router-dom";
 
 interface IAuthorizedUserMenuProps {
-    open : boolean;
+    open: boolean;
     setUserAuth: React.Dispatch<React.SetStateAction<boolean>>;
     setAuthorizedUserMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const AuthorizedUserMenuStyle = styled.div<INavBarProps>`   
+export const AuthorizedUserMenuStyle = styled.div<INavBarProps>`
   right: 24px;
   row-gap: 10px;
   width: 250px;
@@ -55,10 +57,6 @@ export const UserAvatar = styled.img`
   width: 75px;
 `
 
-import React, {FC} from 'react';
-import {Link} from "react-router-dom";
-
-
 
 const AuthorizedUserMenu:FC<IAuthorizedUserMenuProps> = ({open,setUserAuth, setAuthorizedUserMenuOpen}) => {
 
@@ -75,11 +73,12 @@ const AuthorizedUserMenu:FC<IAuthorizedUserMenuProps> = ({open,setUserAuth, setA
                     <div>userName</div>
                 </div>
                 <div>
-                    <UserAvatar src={'https://www.kindpng.com/picc/m/78-785975_icon-profile-bio-avatar-person-symbol-chat-icon.png'} />
+                    <UserAvatar
+                        src={'https://www.kindpng.com/picc/m/78-785975_icon-profile-bio-avatar-person-symbol-chat-icon.png'}/>
                 </div>
             </UserMainInfo>
-            <Link to={'/me'}>Личный кабинет</Link>
-            <Link to={'/favorites'}>Избранное</Link>
+            <Link onClick={() => setAuthorizedUserMenuOpen(false)} to={'/me/home'}>Личный кабинет</Link>
+            <Link onClick={() => setAuthorizedUserMenuOpen(false)} to={'/favorites'}>Избранное</Link>
             <Link to={'/'} onClick={handleLogout}>Выйти</Link>
         </AuthorizedUserMenuStyle>
     );

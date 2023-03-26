@@ -13,6 +13,7 @@ import OneMoviePage from "./pages/OneMoviePage";
 import NewMovies from "./pages/NewMovies";
 import AllMovies from "./pages/AllMovies";
 import AllSeries from "./pages/AllSeries";
+import PersonalPage from "./pages/PersonalPage";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -35,6 +36,7 @@ function App() {
                             <Route path="/news" element={<NewMovies/>}/>
                             <Route path="/movies" element={<AllMovies/>}/>
                             <Route path="/series" element={<AllSeries/>}/>
+                            <Route path="/me/*" element={<PersonalPage/>}/>
                     </Routes>
                         </Container>
                     <Footer/>

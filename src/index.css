@@ -54,7 +54,7 @@ header {
 }
 
 .inactive {
-    color: gray;
+    color: #cccccc;
 }
 
 @media (max-width: 900px) {
