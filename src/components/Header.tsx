@@ -8,7 +8,7 @@ import HamburgerButton from "./HamburgerButton";
 import {SideMenu} from "./SideBar";
 import {useOnClickOutside, useOnClickOutsideForMenu} from "../hooks/onClickOutside";
 import bebraLogo from "../bebra.png"
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import SearchBar from "./SearchBar";
 import {Logo} from "./Logo";
 import UserIcon from "./UserIcon";
@@ -82,7 +82,7 @@ const Header = () => {
                                 <NavLink to={'/series'}
                                          className={({isActive}) => (isActive ? 'active' : 'inactive')}>Сериалы</NavLink>
                             </div>
-                            {isUserAuth && <FavoriteListIcon/>}
+                            {isUserAuth && <Link to={'/favorites'}><FavoriteListIcon/></Link>}
                             <SearchBar
                                 inputRef={userMenuRef}
                                 loginButtonRef={loginButtonRef}
@@ -97,7 +97,7 @@ const Header = () => {
                         </Toolbar>
                         {isUserAuth ?
                             <AuthorizedUserMenu open={isAuthorizedUserMenuOpen}
-                                                setUserAuth = {setUserAuth}
+                                                setUserAuth={setUserAuth}
                                                 setAuthorizedUserMenuOpen={setAuthorizedUserMenuOpen}/>
                             : <>
                                 <LoginPage
