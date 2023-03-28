@@ -13,14 +13,20 @@ const PersonalPageContainer = styled.div`
 const PersonalPageMenu = styled.div`
   display: flex;
   column-gap: 10px;
-  font-size: 18px;
+  font-size: 20px;
 
   @media ${props => props.theme.media.phoneAndTablet} {
       justify-content: space-between;
   }
+  @media ${props => props.theme.media.phone}{
+    flex-direction : column;
+  }
+
+  & a:hover{
+    color:white;
+  }
   
   & a {
-    color: white;
     text-decoration: none;
     @media ${props => props.theme.media.phoneAndTablet} {
         font-size: 28px;

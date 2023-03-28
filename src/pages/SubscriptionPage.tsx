@@ -1,52 +1,55 @@
 import React from 'react';
 import styled from "styled-components";
 
-const ProfileInfo = styled.div`
+const SubscriptionInfo = styled.div`
   margin-top: 15px;
   width: 100%;
   height: 200px;
   backdrop-filter: brightness(75%);
   border-radius: 25px;
-  display: grid;
-`
-
-const UserAvatarBlock = styled.div`
   display: flex;
-  justify-content: center;
-  align-content: center;
+  font-size: 24px;
   align-items: center;
-
-  & img {
-    max-width: 100%;
-    height: 175px;
-    border-radius: 100px;
+`
+const SubscriptionMainInfo = styled.div`
+  flex : 40% 0 0;
+`
+const SubscriptionName = styled.div`
+  justify-items: flex-start;
+`
+const SubscriptionDate = styled.div`
+  font-size: 18px;
+  color: #b7b7b7;
+`
+const SubscriptionPrice = styled.div`
+  flex: 25% 0 0;
+`
+const UnsubscriptionButton = styled.div`
+  flex-grow: 1;
+  justify-self: center;
+  
+  &:hover{
+    cursor: pointer;
+    text-shadow: 0 0 4px #fff;
   }
+  
 `
 
-const ProfileDetailsBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`
 
-const ProfileDetails = styled.div`
-  font-size: 36px;
-`
-
-const EditProfileButton = styled.button`
-  border-radius: 15px;
-  width: 200px;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-  backdrop-filter: brightness(75%);
-  border: none;
-`
 const SubscriptionPage = () => {
     return (
-        <ProfileInfo>
-            Подиска оформлена до 23.04.2023
-        </ProfileInfo>
+        <SubscriptionInfo>
+            <SubscriptionMainInfo>
+                <SubscriptionName>
+                    Подписка ОптоПремиум
+                </SubscriptionName>
+                <SubscriptionDate>
+                    Оформлена до 23.04.2023
+                </SubscriptionDate>
+            </SubscriptionMainInfo>
+            <SubscriptionPrice>390р/мес</SubscriptionPrice>
+            <UnsubscriptionButton>Отменить подписку</UnsubscriptionButton>
+        </SubscriptionInfo>
     );
 };
 

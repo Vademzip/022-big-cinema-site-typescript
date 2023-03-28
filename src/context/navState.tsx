@@ -2,9 +2,9 @@ import React, {createContext, FC, PropsWithChildren, useState} from 'react';
 
 interface IValue {
     isMenuOpen: boolean;
-    toggleMenuMode: () => void;
+    toggleMenuMode: () => void; //Боковая менюшка
     isUserMenuOpen: boolean;
-    toggleUserMenuMode: () => void;
+    toggleUnauthorizedUserMenuMode: () => void;
     handleLoginClick: () => void;
     handleLoginClose: () => void;
     showModal: boolean;
@@ -13,23 +13,29 @@ interface IValue {
     handleRegisterClose: () => void;
     showRegisterModal: boolean;
     setShowRegisterModal: React.Dispatch<React.SetStateAction<boolean>>;
-    isAuthorizedUserMenuOpen: boolean;
-    setAuthorizedUserMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    isUnauthorizedUserMenuOpen: boolean;
+    setUnauthorizedUserMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
     isUserAuth: boolean;
     setUserAuth: React.Dispatch<React.SetStateAction<boolean>>;
-
-
+    isAuthorizedUserMenuOpen : boolean;
+    // toggleAuthorizedUserMenuMode: () => void;
 }
 
 export const MenuContext = createContext<IValue>({
-    isUserAuth: false, setUserAuth(value: ((prevState: boolean) => boolean) | boolean): void {
+    isAuthorizedUserMenuOpen: false,
+    isUnauthorizedUserMenuOpen: false,
+    setUnauthorizedUserMenuOpen(value: ((prevState: boolean) => boolean) | boolean): void {
     },
-
+    /*toggleAuthorizedUserMenuMode(): void {
+    },*/
+    isUserAuth: false,
+    setUserAuth(value: ((prevState: boolean) => boolean) | boolean): void {
+    },
     isMenuOpen: true,
     toggleMenuMode: () => {
     },
     isUserMenuOpen: false,
-    toggleUserMenuMode: () => {
+    toggleUnauthorizedUserMenuMode: () => {
     },
     showModal: false,
     handleLoginClick: () => {
@@ -44,12 +50,7 @@ export const MenuContext = createContext<IValue>({
     handleRegisterClose(): void {
     },
     setShowRegisterModal(value: ((prevState: boolean) => boolean) | boolean): void {
-    },
-    isAuthorizedUserMenuOpen: false,
-    setAuthorizedUserMenuOpen(value: ((prevState: boolean) => boolean) | boolean): void {
     }
-
-
 });
 
 const NavState: FC<PropsWithChildren> = ({children}) => {
@@ -57,9 +58,9 @@ const NavState: FC<PropsWithChildren> = ({children}) => {
     const [isUserMenuOpen, setUserMenu] = useState<boolean>(false)
     const [showModal, setShowModal] = useState(false);
     const [showRegisterModal, setShowRegisterModal] = useState(false);
-    const [isAuthorizedUserMenuOpen, setAuthorizedUserMenuOpen] = useState(false)
-    const [isUserAuth, setUserAuth] = useState<boolean>(false)
-
+    const [isUnauthorizedUserMenuOpen, setUnauthorizedUserMenuOpen] = useState(false)
+    const [isUserAuth, setUserAuth] = useState<boolean>(true)
+    const [isAuthorizedUserMenuOpen, setAuthorizedUserMenuOpen] = useState<boolean>(false)
     function toggleMenuMode() {
         toggleMenu(!isMenuOpen);
     }
@@ -80,19 +81,21 @@ const NavState: FC<PropsWithChildren> = ({children}) => {
         setShowModal(false);
     };
 
-    function toggleUserMenuMode() {
+    function toggleUnauthorizedUserMenuMode() {
         if (isUserAuth)
-            setAuthorizedUserMenuOpen(!isAuthorizedUserMenuOpen)
+            setUnauthorizedUserMenuOpen(!isUnauthorizedUserMenuOpen)
         else
             setUserMenu(!isUserMenuOpen);
     }
+
+
 
     return (
         <MenuContext.Provider value={{
             isMenuOpen,
             toggleMenuMode,
             isUserMenuOpen,
-            toggleUserMenuMode,
+            toggleUnauthorizedUserMenuMode,
             showModal,
             handleLoginClick,
             setShowModal,
@@ -101,10 +104,12 @@ const NavState: FC<PropsWithChildren> = ({children}) => {
             handleRegisterClose,
             showRegisterModal,
             setShowRegisterModal,
-            setAuthorizedUserMenuOpen,
-            isAuthorizedUserMenuOpen,
+            setUnauthorizedUserMenuOpen,
+            isUnauthorizedUserMenuOpen,
             isUserAuth,
-            setUserAuth
+            setUserAuth,
+            isAuthorizedUserMenuOpen
+
         }}>{children}</MenuContext.Provider>
     );
 };

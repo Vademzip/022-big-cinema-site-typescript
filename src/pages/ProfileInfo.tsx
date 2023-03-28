@@ -8,7 +8,15 @@ const ProfileInfo = styled.div`
   backdrop-filter: brightness(75%);
   border-radius: 25px;
   display: grid;
-  grid-template-columns: 25% 60% 1fr;
+  grid-template-columns: 25% 50% 1fr;
+  
+  @media ${props => props.theme.media.phoneAndTablet}{
+    box-sizing: border-box;
+    grid-template-columns: auto;
+    height: auto;
+    padding: 25px 10px;
+  }
+  
 `
 
 const UserAvatarBlock = styled.div`
@@ -27,21 +35,39 @@ const UserAvatarBlock = styled.div`
 const ProfileDetailsBlock = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-content: center;
+  justify-content: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const ProfileDetails = styled.div`
-  font-size: 36px;
+  font-size: 32px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  
 `
 
 const EditProfileButton = styled.button`
+  font-size: 24px;
   border-radius: 15px;
-  width: 200px;
   height: 50px;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-  backdrop-filter: brightness(75%);
+  background: none;
   border: none;
+  cursor: pointer;
+  align-self: center;
+  
+  @media ${props => props.theme.media.phoneAndTablet}{
+    background:#0000001c;
+  }
+  
+  &:hover{
+    text-shadow: 0 0 4px #fff;
+  }
+  
 `
 const ProfileInfoBlock = () => {
     return (
@@ -54,10 +80,10 @@ const ProfileInfoBlock = () => {
                 <ProfileDetails>Вадим</ProfileDetails>
                 <ProfileDetails>vadim.sardarov@yandex.ru</ProfileDetails>
                 <ProfileDetails>32 года</ProfileDetails>
+            </ProfileDetailsBlock>
                 <EditProfileButton>
                     Изменить данные
                 </EditProfileButton>
-            </ProfileDetailsBlock>
 
         </ProfileInfo>
     );

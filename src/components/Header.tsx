@@ -6,7 +6,7 @@ import {Container} from "@mui/material";
 import {MenuContext} from "../context/navState";
 import HamburgerButton from "./HamburgerButton";
 import {SideMenu} from "./SideBar";
-import {useOnClickOutside, useOnClickOutsideForMenu} from "../hooks/onClickOutside";
+import {useOnClickOutside, useOnClickOutsideForAuthorizedMenu, useOnClickOutsideForMenu} from "../hooks/onClickOutside";
 import bebraLogo from "../bebra.png"
 import {Link, NavLink} from "react-router-dom";
 import SearchBar from "./SearchBar";
@@ -27,12 +27,12 @@ const Header = () => {
     const loginButtonRef = useRef<HTMLDivElement>(null);
     const registerModalContentRef = useRef<HTMLDivElement>(null);
     const registerButtonRef = useRef<HTMLDivElement>(null);
-
+    const authorizedUserMenuRef = useRef<HTMLDivElement>(null);
     const {
         isMenuOpen,
         toggleMenuMode,
         isUserMenuOpen,
-        toggleUserMenuMode,
+        toggleUnauthorizedUserMenuMode,
         showModal,
         handleLoginClick,
         setShowModal,
@@ -42,9 +42,9 @@ const Header = () => {
         showRegisterModal,
         setShowRegisterModal,
         isUserAuth,
-        isAuthorizedUserMenuOpen,
-        setAuthorizedUserMenuOpen,
-        setUserAuth
+        setUserAuth,
+        isUnauthorizedUserMenuOpen,
+        setUnauthorizedUserMenuOpen
     } = useContext(MenuContext);
 
     useOnClickOutside(node, menuButtonRef, () => {
@@ -55,7 +55,13 @@ const Header = () => {
 
     useOnClickOutsideForMenu(userMenuRef, userMenuButtonRef, () => {
         if (isUserMenuOpen) {
-            toggleUserMenuMode();
+            toggleUnauthorizedUserMenuMode();
+        }
+    })
+
+    useOnClickOutsideForAuthorizedMenu(authorizedUserMenuRef, userMenuButtonRef, () => {
+        if (isUserMenuOpen) {
+            toggleUnauthorizedUserMenuMode();
         }
     })
 
@@ -96,9 +102,12 @@ const Header = () => {
                             </div>
                         </Toolbar>
                         {isUserAuth ?
-                            <AuthorizedUserMenu open={isAuthorizedUserMenuOpen}
-                                                setUserAuth={setUserAuth}
-                                                setAuthorizedUserMenuOpen={setAuthorizedUserMenuOpen}/>
+                            <div ref = {authorizedUserMenuRef}>
+                                <AuthorizedUserMenu open={isUnauthorizedUserMenuOpen}
+                                                    setUserAuth={setUserAuth}
+                                                    setAuthorizedUserMenuOpen={setUnauthorizedUserMenuOpen
+                                }/>
+                            </div>
                             : <>
                                 <LoginPage
                                     handleLoginClose={handleLoginClose}

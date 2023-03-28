@@ -17,7 +17,8 @@ export const AuthorizedUserMenuStyle = styled.div<INavBarProps>`
   position: absolute;
   box-sizing: border-box;
   border-radius: 5px;
-  background-color: rgb(41, 68, 33);
+  background-color: ${props => props.color || props.theme.colors.primary};
+  //background-color: rgb(41, 68, 33);
   display: flex;
   flex-direction: column;
   -webkit-box-pack: center;
@@ -66,7 +67,7 @@ const AuthorizedUserMenu:FC<IAuthorizedUserMenuProps> = ({open,setUserAuth, setA
     }
 
     return (
-        <AuthorizedUserMenuStyle open={open} className={'userMenu'}>
+        <AuthorizedUserMenuStyle color={'#5819a5'} open={open} className={'userMenu'}>
             <UserMainInfo>
                 <div className={'userWelcome'}>
                     <div>Здравстуйте,</div>
