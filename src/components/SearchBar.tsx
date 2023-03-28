@@ -65,7 +65,7 @@ const SearchBar = ({
                        handleRegisterClick,
                        isUserAuth
                    }: ISearchBarProps) => {
-    const {isUserMenuOpen, toggleUserMenuMode} = useContext(MenuContext)
+    const {isUserMenuOpen, toggleUnauthorizedUserMenuMode} = useContext(MenuContext)
     return (
         <Search className={'search'}>
             <SearchIconWrapper>
@@ -80,14 +80,14 @@ const SearchBar = ({
                     <UnauthorizedUserMenu open={isUserMenuOpen} className={'userMenu'}>
                         <div onClick={() => {
                             handleLoginClick()
-                            toggleUserMenuMode()
+                            toggleUnauthorizedUserMenuMode()
                         }
                         }
                              ref={loginButtonRef}>Авторизация
                         </div>
                         <div onClick={() => {
                             handleRegisterClick()
-                            toggleUserMenuMode()
+                            toggleUnauthorizedUserMenuMode()
                         }
                         }
                              ref={registerButtonRef}>Регистрация
