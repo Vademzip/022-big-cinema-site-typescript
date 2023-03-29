@@ -29,9 +29,8 @@ const Header = () => {
     const registerButtonRef = useRef<HTMLDivElement>(null);
     const authorizedUserMenuRef = useRef<HTMLDivElement>(null);
     const {
-        isMenuOpen,
+        isNavbarMenuOpen,
         toggleMenuMode,
-        isUserMenuOpen,
         toggleUnauthorizedUserMenuMode,
         showModal,
         handleLoginClick,
@@ -44,23 +43,25 @@ const Header = () => {
         isUserAuth,
         setUserAuth,
         isUnauthorizedUserMenuOpen,
-        setUnauthorizedUserMenuOpen
+        setUnauthorizedUserMenuOpen,
+        isAuthorizedUserMenuOpen,
+        setAuthorizedUserMenuOpen
     } = useContext(MenuContext);
 
     useOnClickOutside(node, menuButtonRef, () => {
-        if (isMenuOpen) {
+        if (isNavbarMenuOpen) {
             toggleMenuMode();
         }
     });
 
     useOnClickOutsideForMenu(userMenuRef, userMenuButtonRef, () => {
-        if (isUserMenuOpen) {
+        if (isUnauthorizedUserMenuOpen) {
             toggleUnauthorizedUserMenuMode();
         }
     })
 
     useOnClickOutsideForAuthorizedMenu(authorizedUserMenuRef, userMenuButtonRef, () => {
-        if (isUserMenuOpen) {
+        if (isAuthorizedUserMenuOpen) {
             toggleUnauthorizedUserMenuMode();
         }
     })
@@ -103,9 +104,9 @@ const Header = () => {
                         </Toolbar>
                         {isUserAuth ?
                             <div ref = {authorizedUserMenuRef}>
-                                <AuthorizedUserMenu open={isUnauthorizedUserMenuOpen}
+                                <AuthorizedUserMenu open={isAuthorizedUserMenuOpen}
                                                     setUserAuth={setUserAuth}
-                                                    setAuthorizedUserMenuOpen={setUnauthorizedUserMenuOpen
+                                                    setAuthorizedUserMenuOpen={setAuthorizedUserMenuOpen
                                 }/>
                             </div>
                             : <>

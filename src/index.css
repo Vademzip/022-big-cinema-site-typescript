@@ -154,7 +154,6 @@ header {
 
 @media (max-width: 850px) {
     .userMenu {
-        background-color: #294421 !important;
         border: 1px solid;
     }
 }

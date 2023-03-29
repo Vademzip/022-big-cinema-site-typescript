@@ -1,7 +1,11 @@
 import React, {FC} from 'react';
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {IMovieInfo} from "../types/Movies";
 import {Link} from "react-router-dom";
+
+interface IFavoriteListBlockProps {
+    posterUrl : string;
+}
 
 const MoviePoster = styled.img`
   max-width: 100%;
@@ -69,34 +73,41 @@ const DeleteFavoriteButton = styled.button`
   }
 `
 
-const FavoriteListItem: FC<IMovieInfo> = (props) => {
-    const FavoriteListItemBlock = styled.div`
-      margin-top: 20px;
-      height: 150px;
-      width: 100%;
-      border-radius: 25px;
-      border: 1px solid white;
-      display: flex;
-      flex-wrap: nowrap; /* чтобы элементы не переносились на новую строку */
-      justify-content: space-between; /* чтобы элементы были выровнены по краям */
-      background-image: url(${props.posterUrl});
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      &:hover {
-        transform: scale(1.05);
-      }
+const FavoriteListItemBlock = styled.div<IFavoriteListBlockProps>`
+  margin-top: 20px;
+  height: 150px;
+  width: 100%;
+  border-radius: 25px;
+  border: 1px solid white;
+  display: flex;
+  flex-wrap: nowrap; /* чтобы элементы не переносились на новую строку */
+  justify-content: space-between; /* чтобы элементы были выровнены по краям */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 
-      & > div{
-        text-decoration: none!important;
-      }
-    `
+  ${props =>
+          props.posterUrl &&
+          css`
+            background-image: url(${props.posterUrl});
+          `}
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  & > div {
+    text-decoration: none !important;
+  }
+`
+
+const FavoriteListItem: FC<IMovieInfo> = (props) => {
+
 
     return (
         // <Link to={`/${props.id}`}>
-            <FavoriteListItemBlock>
+            <FavoriteListItemBlock posterUrl = {props.posterUrl}>
                 <MovieMainInfo>
                     <MovieTitle>{props.name}</MovieTitle>
                     {/*<MovieProducer></MovieProducer>*/}

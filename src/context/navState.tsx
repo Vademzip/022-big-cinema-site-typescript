@@ -1,9 +1,8 @@
 import React, {createContext, FC, PropsWithChildren, useState} from 'react';
 
 interface IValue {
-    isMenuOpen: boolean;
+    isNavbarMenuOpen: boolean;
     toggleMenuMode: () => void; //Боковая менюшка
-    isUserMenuOpen: boolean;
     toggleUnauthorizedUserMenuMode: () => void;
     handleLoginClick: () => void;
     handleLoginClose: () => void;
@@ -15,6 +14,7 @@ interface IValue {
     setShowRegisterModal: React.Dispatch<React.SetStateAction<boolean>>;
     isUnauthorizedUserMenuOpen: boolean;
     setUnauthorizedUserMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setAuthorizedUserMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
     isUserAuth: boolean;
     setUserAuth: React.Dispatch<React.SetStateAction<boolean>>;
     isAuthorizedUserMenuOpen : boolean;
@@ -26,15 +26,16 @@ export const MenuContext = createContext<IValue>({
     isUnauthorizedUserMenuOpen: false,
     setUnauthorizedUserMenuOpen(value: ((prevState: boolean) => boolean) | boolean): void {
     },
+    setAuthorizedUserMenuOpen(value: ((prevState: boolean) => boolean) | boolean): void {
+    },
     /*toggleAuthorizedUserMenuMode(): void {
     },*/
     isUserAuth: false,
     setUserAuth(value: ((prevState: boolean) => boolean) | boolean): void {
     },
-    isMenuOpen: true,
+    isNavbarMenuOpen: true,
     toggleMenuMode: () => {
     },
-    isUserMenuOpen: false,
     toggleUnauthorizedUserMenuMode: () => {
     },
     showModal: false,
@@ -54,16 +55,19 @@ export const MenuContext = createContext<IValue>({
 });
 
 const NavState: FC<PropsWithChildren> = ({children}) => {
-    const [isMenuOpen, toggleMenu] = useState(false);
-    const [isUserMenuOpen, setUserMenu] = useState<boolean>(false)
+    const [isNavbarMenuOpen, setToggleNavbarMenu] = useState(false);
+
+    function toggleMenuMode() {
+        setToggleNavbarMenu(!isNavbarMenuOpen);
+    }
+
+    // const [isUserMenuOpen, setUserMenu] = useState<boolean>(false)
     const [showModal, setShowModal] = useState(false);
     const [showRegisterModal, setShowRegisterModal] = useState(false);
     const [isUnauthorizedUserMenuOpen, setUnauthorizedUserMenuOpen] = useState(false)
     const [isUserAuth, setUserAuth] = useState<boolean>(true)
     const [isAuthorizedUserMenuOpen, setAuthorizedUserMenuOpen] = useState<boolean>(false)
-    function toggleMenuMode() {
-        toggleMenu(!isMenuOpen);
-    }
+
 
     const handleRegisterClick = () => {
         setShowRegisterModal(true);
@@ -83,18 +87,17 @@ const NavState: FC<PropsWithChildren> = ({children}) => {
 
     function toggleUnauthorizedUserMenuMode() {
         if (isUserAuth)
-            setUnauthorizedUserMenuOpen(!isUnauthorizedUserMenuOpen)
+            setAuthorizedUserMenuOpen(!isAuthorizedUserMenuOpen)
         else
-            setUserMenu(!isUserMenuOpen);
+            setUnauthorizedUserMenuOpen(!isUnauthorizedUserMenuOpen);
     }
 
 
 
     return (
         <MenuContext.Provider value={{
-            isMenuOpen,
+            isNavbarMenuOpen,
             toggleMenuMode,
-            isUserMenuOpen,
             toggleUnauthorizedUserMenuMode,
             showModal,
             handleLoginClick,
@@ -108,7 +111,8 @@ const NavState: FC<PropsWithChildren> = ({children}) => {
             isUnauthorizedUserMenuOpen,
             isUserAuth,
             setUserAuth,
-            isAuthorizedUserMenuOpen
+            isAuthorizedUserMenuOpen,
+            setAuthorizedUserMenuOpen
 
         }}>{children}</MenuContext.Provider>
     );
