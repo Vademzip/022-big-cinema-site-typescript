@@ -4,6 +4,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import ColorInput, {InputType} from "../components/Input";
 import Button from "../components/Button";
 import {useForm} from "react-hook-form";
+import {login, registration} from "../http/userApi";
+import {IUserInfo, setUserAuth, setUserData} from "../store/features/UserSlice";
+import {useDispatch} from "react-redux";
+import {ILoginUser} from "../types/registerUser";
 
 interface ModalProps {
     show: boolean;
@@ -15,8 +19,6 @@ interface ILoginPageProps {
     handleLoginClose: () => void;
     showModal: boolean;
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-    setUserAuth: React.Dispatch<React.SetStateAction<boolean>>;
-
 
 }
 
@@ -135,9 +137,9 @@ const LoginPage: FC<ILoginPageProps> = ({
                                             modalContentRef,
                                             showModal,
                                             setShowModal,
-                                            loginButtonRef,
-                                            setUserAuth
+                                            loginButtonRef
                                         }) => {
+    const dispatch = useDispatch()
     const handleCloseModal = (event: MouseEvent) => {
         if (modalContentRef.current &&
             !modalContentRef.current.contains(event.target as Node) &&
@@ -179,12 +181,19 @@ const LoginPage: FC<ILoginPageProps> = ({
             errors
         },
         handleSubmit
-    } = useForm()
+    } = useForm<ILoginUser>()
 
-    const onSubmit = (data: object) => {
-        setUserAuth(true)
-        setShowModal(false)
-    }
+    const onSubmit = async (data: ILoginUser) => {
+        let InputData: IUserInfo | void = await login(data)
+          .then(() => {
+              setShowModal(false);
+          });
+
+        if (InputData) {
+            dispatch(setUserData(InputData));
+        }
+        dispatch(setUserAuth(true))
+    };
 
     return (
         <>
@@ -194,7 +203,7 @@ const LoginPage: FC<ILoginPageProps> = ({
                         <CloseIcon className={'closeModalIcon'} onClick={handleLoginClose}/>
                         <PageTitle>Авторизация</PageTitle>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <ColorInput {...register('email')} type={InputType.Email} label={'Email'} id={'email'}/>
+                            <ColorInput {...register('login')} type={InputType.Text} label={'Login'} id={'login'}/>
                             <ColorInput {...register('password')} type={InputType.Password} label={'Password'}
                                         id={'password'}/>
                             <div>

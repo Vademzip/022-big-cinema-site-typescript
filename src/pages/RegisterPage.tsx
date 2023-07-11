@@ -3,7 +3,11 @@ import styled, {css} from "styled-components";
 import CloseIcon from '@mui/icons-material/Close';
 import ColorInput, {InputType} from "../components/Input";
 import Button from "../components/Button";
-import {useForm} from "react-hook-form";
+import {useForm, SubmitHandler} from "react-hook-form"
+import {registration} from "../http/userApi";
+import {useDispatch} from "react-redux";
+import {setUserData, setUserAuth, IUserInfo} from "../store/features/UserSlice"
+import {IRegisterUser} from "../types/registerUser";
 
 const PageTitle = styled.div`
   margin-bottom: 10px;
@@ -31,17 +35,15 @@ const LoginWrapper = styled.div`
 `
 
 interface ModalProps {
-    show: boolean;
+  show: boolean;
 }
 
 interface IRegisterPageProps {
-    registerModalContentRef: React.RefObject<HTMLDivElement>
-    registerButtonRef: React.RefObject<HTMLDivElement>
-    handleRegisterClose: () => void;
-    showModal: boolean;
-    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-
-
+  registerModalContentRef: React.RefObject<HTMLDivElement>
+  registerButtonRef: React.RefObject<HTMLDivElement>
+  handleRegisterClose: () => void;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Modal = styled.div<ModalProps>`
@@ -129,81 +131,96 @@ const ButtonStyled = styled.button`
 `
 
 const RegisterPage: FC<IRegisterPageProps> = ({
-                                                  handleRegisterClose,
-                                                  registerModalContentRef,
-                                                  showModal,
-                                                  setShowModal,
-                                                  registerButtonRef
+                                                handleRegisterClose,
+                                                registerModalContentRef,
+                                                showModal,
+                                                setShowModal,
+                                                registerButtonRef
                                               }) => {
-    const handleCloseModal = (event: MouseEvent) => {
-        if (registerModalContentRef.current &&
-            !registerModalContentRef.current.contains(event.target as Node) &&
-            registerButtonRef.current &&
-            !registerButtonRef.current.contains(event.target as Node)) {
-            setShowModal(false);
-        }
-    };
 
-    useEffect(() => {
-        if (showModal){
-            document.body.style.overflow = "hidden";
-            if (window.innerWidth > 800) {
-                document.body.style.paddingRight = `16px`;
-            }
-        }
-        document.addEventListener('click', handleCloseModal);
-        return () => {
-            document.removeEventListener('click', handleCloseModal);
-            document.body.style.overflow = "";
-            document.body.style.paddingRight = "";
-        };
-    }, [showModal]);
-
-    const {
-        register,
-        formState: {
-            errors
-        },
-        handleSubmit
-    } = useForm()
-
-    const onSubmit = (data: object) => {
-        const request={
-            method:'POST',
-            headers:{'Content-Type': 'application/json'},
-            body:JSON.stringify(data)
-        }
-        fetch('http://localhost:8080/auth/sign-up',request).then(response=>response.json())
+  const dispatch = useDispatch()
+  const handleCloseModal = (event: MouseEvent) => {
+    if (registerModalContentRef.current &&
+      !registerModalContentRef.current.contains(event.target as Node) &&
+      registerButtonRef.current &&
+      !registerButtonRef.current.contains(event.target as Node)) {
+      setShowModal(false);
     }
+  };
 
-    return (
-        <>
-            <Modal show={showModal}>
-                <ModalContent ref={registerModalContentRef}>
-                    <LoginWrapper>
-                        <CloseIcon className={'closeModalIcon'} onClick={handleRegisterClose}/>
-                        <PageTitle>Регистрация</PageTitle>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <ColorInput {...register('name')} type={InputType.Text} label={'Ваше имя'} id={'name'}/>
-                            <ColorInput {...register('login')} type={InputType.Text} label={'Логин'} id={'login'}/>
-                            <ColorInput {...register('email')} type={InputType.Email} label={'Почта'} id={'emailReg'}/>
-                            <ColorInput {...register('date')} type={InputType.Date} label={'Дата рождения'} id={'dateOfBirth'}/>
-                            <ColorInput {...register('avatar')} type={InputType.File} label={'Фото профиля'} id={'avatarUrl'}/>
-                            <ColorInput {...register('password')} type={InputType.Password} label={'Пароль'}
-                                        id={'passwordReg'}/>
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+      if (window.innerWidth > 800) {
+        document.body.style.paddingRight = `16px`;
+      }
+    }
+    document.addEventListener('click', handleCloseModal);
+    return () => {
+      document.removeEventListener('click', handleCloseModal);
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    };
+  }, [showModal]);
 
-                            <ColorInput {...register('dataAgree')} type={InputType.Checkbox}
-                                        label={'Согласие на обработку данных'} id={'agree'}/>
+  const {
+    register,
+    formState: {
+      errors
+    },
+    handleSubmit
+  } = useForm<IRegisterUser>();
 
-                            <Button>
-                                Регистрация
-                            </Button>
-                        </form>
-                    </LoginWrapper>
-                </ModalContent>
-            </Modal>
-        </>
-    );
+  const onSubmit: SubmitHandler<IRegisterUser> = async (data) => {
+    const formData = new FormData()
+    formData.append('name', data.name)
+    formData.append('login', data.login)
+    formData.append('email', data.email)
+    if (data.date)
+      formData.append('date', data.date)
+    formData.append('image', data.image[0])
+    formData.append('password', data.password)
+
+    const requestRegister = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    }
+    let InputData: IUserInfo | void = await registration(formData)
+      .then(() => setShowModal(false))
+    if (InputData)
+      dispatch(setUserData(InputData))
+    dispatch(setUserAuth(true))
+  }
+
+  return (
+    <>
+      <Modal show={showModal}>
+        <ModalContent ref={registerModalContentRef}>
+          <LoginWrapper>
+            <CloseIcon className={'closeModalIcon'} onClick={handleRegisterClose}/>
+            <PageTitle>Регистрация</PageTitle>
+            <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+              <ColorInput {...register('name')} type={InputType.Text} label={'Ваше имя'} id={'name'} value={'oleg'}/>
+              <ColorInput {...register('login')} type={InputType.Text} label={'Логин'} id={'login'} value={'oleg'}/>
+              <ColorInput {...register('email')} type={InputType.Email} label={'Почта'} id={'emailReg'}
+                          value={'oleg@mail.ru'}/>
+              <ColorInput {...register('date')} type={InputType.Date} label={'Дата рождения'} id={'dateOfBirth'}
+                          value={'2022-02-26'}/>
+              <ColorInput {...register('image')} type={InputType.File} label={'Фото профиля'} id={'avatarUrl'}/>
+              <ColorInput {...register('password')} type={InputType.Password} label={'Пароль'} value={'13232'}
+                          id={'passwordReg'}/>
+              <ColorInput {...register('agree')} type={InputType.Checkbox} label={'Согласие на обработку данных'}
+                          id={'agree'}/>
+              <Button>
+                Регистрация
+              </Button>
+            </form>
+          </LoginWrapper>
+        </ModalContent>
+      </Modal>
+    </>
+  );
 };
 
 export default RegisterPage;
